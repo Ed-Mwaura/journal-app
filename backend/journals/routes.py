@@ -5,10 +5,10 @@ from models import Journals
 from datetime import datetime
 
 
-# TODO: review http codes
 @login_required
 @journal_bp.route('/home')
 def home_page():
+    """BY DEFAULT, GET ALL JOURNALS BELONGING TO LOGGED IN USER. FRONTEND WILL GROUP BY CATEGORY"""
     if current_user.is_authenticated:
         user_logged_in = current_user.id
         journals = Journals.query.filter_by(user_id=user_logged_in).all()
@@ -22,6 +22,7 @@ def home_page():
 @login_required
 @journal_bp.route('/add_journal', methods=['POST'])
 def add_journal():
+    """ROUTE TO ADD A NEW JOURNAL"""
     if current_user.is_authenticated:
         user_logged_in = current_user.id 
 
@@ -46,6 +47,7 @@ def add_journal():
 @login_required
 @journal_bp.route('/edit_journal/<id>', methods=['GET', 'POST'])
 def edit_journal(id):
+    """ROUTE TO EDIT A SELECTED JOURNAL. WILL PASS ID FROM FRONTEND"""
     if current_user.is_authenticated:
         user_logged_in = current_user.id
 
@@ -95,6 +97,7 @@ def edit_journal(id):
 @login_required
 @journal_bp.route('/delete_journal/<id>', methods=['GET'])
 def delete_journal(id):
+    """ROUTE TO DELETE A SELECTED JOURNAL. WILL PASS ID FROM FRONTEND"""
     if current_user.is_authenticated:
         journal = Journals.query.filter_by(id=id).first()
 
