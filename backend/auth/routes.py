@@ -1,6 +1,6 @@
-from flask import jsonify, request
+from flask import jsonify, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 from auth import auth_bp
 from models import Users
@@ -46,6 +46,9 @@ def login():
         return jsonify({'message': 'Invalid Credentials!'}), 401
     
     login_user(user)
+    print('current user: ', current_user)
+    print('authenticated?: ', current_user.is_authenticated)
+
     return jsonify({'message':'Logged in successfully'}), 200
 
 
@@ -57,7 +60,11 @@ def test_protected_route():
 
 
 @auth_bp.route('/logout')
+@login_required
 def logout():
     """LOGOUT ROUTE"""
     logout_user()
+    print('current user: ', current_user)
+    print('authenticated?: ', current_user.is_authenticated)
+
     return jsonify({'message': 'Logged out successfully'}), 200

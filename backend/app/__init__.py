@@ -16,7 +16,7 @@ def create_app(config_mode):
     db.init_app(app)
 
     # flask_login
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth_bp.login'
     login_manager.init_app(app)
 
     from models import Users

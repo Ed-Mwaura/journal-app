@@ -31,6 +31,29 @@ class Journals(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(100), nullable = False)
     content = db.Column(db.Text)
+    category = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False) #TODO: CONFIRM UTC
     last_modified = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+
+    # convert to dictionary for json purposes
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+    # CRUD Operations
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update(self, title, content, category, last_modified):
+        self.title = title 
+        self.content = content 
+        self.category = category
+        self.last_modified = last_modified
+
+        db.session.commit()
+        
