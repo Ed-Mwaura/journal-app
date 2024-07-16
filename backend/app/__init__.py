@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
-
+from models import Users, Journals
+from exts import db
 
 from dotenv import load_dotenv
 load_dotenv()
 
 
-db = SQLAlchemy()
 migrate = Migrate()
 
 

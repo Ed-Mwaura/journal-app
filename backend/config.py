@@ -10,9 +10,7 @@ class DevConfig(Config):
     SECRET_KEY = 'DEV'
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI')
-    print('haha',SQLALCHEMY_DATABASE_URI)
-    # SQLALCHEMY_DATABASE_URI = 'postgresql://admindev:admindev@localhost:5432/journal_dev'
-
+    
 
 class ProdConfig(Config):
     DEVELOPMENT = False 
